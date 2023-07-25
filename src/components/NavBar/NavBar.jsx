@@ -10,7 +10,7 @@ import { AppBar, Toolbar, Typography, Box, IconButton } from '@mui/material';
 
 const NavBar = () => {
   return (
-    <AppBar color='secondary' position='fixed'>
+    <AppBar color='primary' position='fixed'>
         <Toolbar>
 
             <Box>
