@@ -3,12 +3,15 @@ import './styles.css';
 import pokedexLogo from '../../assets/pokedexLogo.png';
 import SearchBar from './SearchBar';
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { AppBar, Toolbar, Typography, Box, IconButton } from '@mui/material';
 
 
 const NavBar = () => {
+
+  const navigate = useNavigate()
+
   return (
     <AppBar color='primary' position='fixed'>
         <Toolbar>
@@ -18,7 +21,7 @@ const NavBar = () => {
             </Box>
 
             <Box>
-            <img className='pokedexLogo' src={pokedexLogo} />
+            <img className='pokedexLogo' src={pokedexLogo} onClick={()=> navigate('/')}/>
             </Box>
 
             <Box sx={{display: 'flex', justifyContent:'flex-end', width:'100%' }}>

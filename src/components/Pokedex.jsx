@@ -2,7 +2,7 @@ import React from 'react'
 
 import PokeList from './PokeList/PokeList';
 
-import { Typography, Box } from '@mui/material'
+import { Typography, Box, Button } from '@mui/material'
 import NavBar from './NavBar/NavBar'
 
 const Pokedex = () => {
@@ -13,6 +13,15 @@ const Pokedex = () => {
             <Box className='mainContainer' sx={{marginTop:'6rem', minHeight:'100vh', maxWidth:'85%'}}>            
                 <PokeList />
             </Box>
+        </Box>
+
+        <Box className='mainContainer' sx={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:'25vh', bgcolor:'#242424'}}>  
+          <Button 
+                variant='contained' 
+                sx={{marginTop:'3rem', marginBottom:'5rem'}}
+                //onClick={handleCargarMas()}> 
+                >Cargar más
+          </Button>
         </Box>
     </>
   )

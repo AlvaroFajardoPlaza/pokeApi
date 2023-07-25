@@ -1,3 +1,11 @@
 .pokeSprite {
     height: 150px;
 }
+
+.cardContainer {
+    background-image: '../../assets/pokeball.png';
+}
+
+.cardContainer:hover {
+    background-color: #7d786cd8;
+}

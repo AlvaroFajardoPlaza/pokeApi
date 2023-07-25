@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { Grid, Box, Card, CardActions, CardContent, CardMedia, Button, Typography, CircularProgress } from '@mui/material';
 
 
 const PokeList = () => {
+
+  //Creamos el hook que nos permita navegar a cada PokeCard
+  const navigate = useNavigate();
 
   const [ offset, setOffset ] = useState(0)
   const [ pokemonData, setPokemonData ] = useState([])
@@ -52,7 +56,7 @@ const PokeList = () => {
   //     }
   //   }
   // };
-  
+
 
   //Creamos una función que nos devuelva todos los pokemon de la API
   const globalData = async () => {
@@ -106,13 +110,24 @@ const PokeList = () => {
   //   setPage((prevPage) => prevPage + 1); //Incrementamos el valor de las páginas en 1
   // }
 
+  const loadingPokeData = () => {
+    return (
+      <>
+        <CircularProgress color='primary' sx={{marginTop:'8rem'}} />
+      </>
+    )
+  }
+
   return (
     <>
     <Grid container spacing={2}>
       { pokemonData.length > 0 ? pokemonData.map( pokemon => {
         return(
           <Grid item xs={12} sm={6} md={3} key={pokemon.name}>
-            <Card sx={{bgcolor:'#606060' ,border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}>
+            <Card className='cardContainer'
+              sx={{bgcolor:'#606060' ,border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}
+              onClick={ () => navigate(`/${pokemon.name}`)}
+            >
               <CardContent>
 
                 {/* POKENAME Y POKEORDER */}
@@ -148,16 +163,9 @@ const PokeList = () => {
           </Grid>
         )
       } 
-      ) : (<CircularProgress color='secondary' sx={{marginTop:'8rem'}} />)
+      ) : (loadingPokeData())
       }
     </Grid>
-
-    <Button 
-      variant='contained' 
-      sx={{marginTop:'2rem', marginBottom:'5rem'}}
-      //onClick={handleCargarMas()}> 
-        >Cargar más
-    </Button>
   </>
   )
 };
