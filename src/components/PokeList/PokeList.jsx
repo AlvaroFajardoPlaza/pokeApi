@@ -3,6 +3,10 @@ import './styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+//APISERVICE 
+import { get40Pokemon } from '../../pokeApiCalls/apiService';
+
+//MATERIAL UI
 import { Grid, Box, Card, CardActions, CardContent, CardMedia, Button, Typography, CircularProgress } from '@mui/material';
 
 
@@ -18,28 +22,28 @@ const PokeList = () => {
   //ESTADOS SIMPLES DENTRO DE NUESTRA POKÉDEX
   const [ active, setActive ] = useState(false)
 
-  //Esta función nos devuelve los primeros 40 Pokemon
-  const getPokeData = async (limit = 40 ) => {
-    try {
-      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
-      //console.log('la PokeData: ', data.results);
 
-      const promises = data.results.map( async (pokemon) => {
-        const res = await fetch(pokemon.url)
-        const data = res.json()
-        return data
-      })
+  // const getPokeData = async (limit = 40 ) => {
+  //   try {
+  //     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+  //     //console.log('la PokeData: ', data.results);
 
-      const pokeResults = await Promise.all(promises)
-      //console.log('Esta es la data bien recibida de los pokemon: ', pokeResults);
+  //     const promises = data.results.map( async (pokemon) => {
+  //       const res = await fetch(pokemon.url)
+  //       const data = res.json()
+  //       return data
+  //     })
 
-      //Aquí tenemos que considerar la lógica del botón "CARGAR MÁS"
-      setPokemonData(pokeResults)
-      return
-    } catch(error){
-      console.log(error)
-    }
-  };
+  //     const pokeResults = await Promise.all(promises)
+  //     //console.log('Esta es la data bien recibida de los pokemon: ', pokeResults);
+
+  //     //Aquí tenemos que considerar la lógica del botón "CARGAR MÁS"
+  //     setPokemonData(pokeResults)
+  //     return
+  //   } catch(error){
+  //     console.log(error)
+  //   }
+  // };
 
   //Esta función guarda la lógica para cargar más pokemon: -------------------
   // const LoadMoreButton = () => {
@@ -96,8 +100,12 @@ const PokeList = () => {
 
   //1º UseEffect para llamar a los primeros 40 pokemon ------------------
   useEffect(() => {
-    getPokeData()
-    console.log('Recibimos datos 40 pokemon: ', pokemonData);
+    get40Pokemon()
+      .then( data => {
+        console.log('Recibimos datos 40 pokemon: ', data)
+        setPokemonData(data)
+      })
+      .catch( error => console.log('Ha habido un error ', error))  
   }, []);
 
   //2º UseEffect para llamar a todos los pokemon ------------------------------------
@@ -106,9 +114,6 @@ const PokeList = () => {
     console.log('Global: ', globalPokemon);
   }, []);
 
-  // const handleCargarMas = () => {
-  //   setPage((prevPage) => prevPage + 1); //Incrementamos el valor de las páginas en 1
-  // }
 
   const loadingPokeData = () => {
     return (
@@ -125,14 +130,14 @@ const PokeList = () => {
         return(
           <Grid item xs={12} sm={6} md={3} key={pokemon.name}>
             <Card className='cardContainer'
-              sx={{bgcolor:'#606060' ,border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}
+              sx={{bgcolor:'#606060', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}
               onClick={ () => navigate(`/${pokemon.name}`)}
             >
               <CardContent>
 
                 {/* POKENAME Y POKEORDER */}
                 <Box sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center'}}>
-                  <Box sx={{display:'inline-flex', gap:'1rem'}}>
+                  <Box sx={{display:'inline-flex', gap:'0.75rem'}}>
                     <Typography variant='h3' sx={{color:'#858585', fontSize:'2rem', fontWeight:'900'}}>
                       {pokemon.order}
                     </Typography>
