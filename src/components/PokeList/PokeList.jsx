@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 //APISERVICE 
 import { get40Pokemon } from '../../pokeApiCalls/apiService';
 
-//MATERIAL UI
+//MATERIAL UI & ASSETS
 import { Grid, Box, Card, CardActions, CardContent, CardMedia, Button, Typography, CircularProgress } from '@mui/material';
+import pokeWall from '../../assets/pokeball.png';
 
 
 const PokeList = () => {
@@ -85,18 +86,6 @@ const PokeList = () => {
     }
   };
 
-  //Función que nos devuelve la info de un pokemon conforme a su ID: ---------------
-  const getPokeByID = async (id) => {
-    try {
-      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      console.log(data);
-      return data
-      
-    } catch(error){
-      console.log('Parece que ha habido un error: ', error)
-    }
-  };
-
 
   //1º UseEffect para llamar a los primeros 40 pokemon ------------------
   useEffect(() => {
@@ -121,7 +110,7 @@ const PokeList = () => {
         <CircularProgress color='primary' sx={{marginTop:'8rem'}} />
       </>
     )
-  }
+  };
 
   return (
     <>
@@ -137,6 +126,7 @@ const PokeList = () => {
 
                 {/* POKENAME Y POKEORDER */}
                 <Box sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center'}}>
+
                   <Box sx={{display:'inline-flex', gap:'0.75rem'}}>
                     <Typography variant='h3' sx={{color:'#858585', fontSize:'2rem', fontWeight:'900'}}>
                       {pokemon.order}

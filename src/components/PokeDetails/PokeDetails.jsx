@@ -1,26 +1,98 @@
 import React from 'react';
+import './styles.css';
+import { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
+import { getPokeByName } from '../../pokeApiCalls/apiService';
 
-import { Typography, Box } from '@mui/material'
+import { Typography, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom';
 
 const PokeDetails = () => {
 
+  const [ loading, setLoading ] = useState(true)
+  const [ pokeData, setPokeData ] = useState({});
+
   const pokemonName = useParams().slug
+
+  const fetchPokemon = async(pokemonName) => {
+    const res = await getPokeByName(pokemonName)
+    setPokeData(res)
+    setLoading(false)
+  };
+
+  //hook que pide la info al cargar la página.
+  useEffect( () => {
+     fetchPokemon(pokemonName)
+  }, [])
+
+  console.log('Tenemos bien recibida la PokeData???', pokeData);
 
   return (
     <>
         <NavBar />
 
         <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#242424',}}>
-            <Box className='mainContainer' sx={{minWidth:'70%', bgcolor:'#454545', marginTop:'6rem', marginBottom:'6rem', p:'2rem', minHeight:'100vh', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}>            
-                <Typography variant='body1' sx={{color:'#e3e3e3', textAlign:'center'}}>
-                  Traemos los datos del Pokémon al que estás llamando:
-                </Typography>
+            <Box className='mainContainer' sx={{minWidth:'38%', bgcolor:'#454545', marginTop:'6rem', marginBottom:'6rem', p:'2rem', minHeight:'100vh', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}>            
+                { loading ? (<CircularProgress color='primary' sx={{marginTop:'8rem'}} />
+                ) : (
+                <>
+                 <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                  
+                  {/* POKE NAME */}
+                  <Typography variant='h4' sx={{fontWeight:'800', color:'#ffffff', textTransform:'capitalize'}}>
+                    {pokeData.name}
+                  </Typography>
 
-                <Typography variant='h4' sx={{color:'#e3e3e3', textTransform:'capitalize', textAlign:'center', paddingTop:'1rem'}}>
-                  {pokemonName}
-                </Typography>
+                  {/* POKE IMAGE */}
+                  <img className='pokeImg' src={pokeData.sprites.front_default}></img>
+                  
+                  {/* POKE TYPES */}
+                  <Box key={pokemonName} sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem'}}>
+                    {pokeData.types.map( type => (
+                      <Box sx={{bgcolor:'#ededed', border: '1px solid #eaeaea', borderRadius:'5rem', padding:'1rem'}}>
+                      <Typography variant='body1'>
+                        {type.type.name}
+                      </Typography>
+                      </Box>
+                    ))}
+                  </Box>
+
+                  {/* WEIGHT & HEIGHT */}
+                  <Box sx={{display:'flex', justifyContent:'space-around', alignItems:'center', gap:'2rem', marginTop: '2rem'}}>
+                    <Typography variant='body1'>Weight: {pokeData.weight}</Typography>
+                    <Typography variant='body1'>Height: {pokeData.height}</Typography>
+                  </Box>
+
+                  <Box sx={{display:'flex', gap:'4rem'}}>
+                    {/* HABILITIES */}
+                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'left', alignItems:'left', gap:'1rem', marginTop:'2rem', bgcolor:'#e3e3e3', borderRadius:'1rem', padding:'1rem', }}>
+                      <Typography>Possible abilities of {pokeData.name}:</Typography>
+                    
+                    {pokeData.abilities.map( ability => (
+                        <Typography variant='body1' sx={{textTransform:'capitalize'}}>
+                          {ability.ability.name}
+                        </Typography>
+                      ))}
+                    </Box>
+
+                    {/* POKE STATS */}
+                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'left', gap:'1rem', marginTop: '2rem', border: '1px solid #eaeaea', borderRadius:'1rem', padding:'1rem', bgcolor:'#e3e3e3' }}>
+                    {pokeData.stats.map( stat => (
+                        <Typography variant='body1' sx={{textTransform:'capitalize'}}>
+                          {stat.stat.name} : {stat.base_stat}
+                        </Typography>
+                      ))}
+                    </Box>
+                  </Box>
+                  
+
+
+
+                  
+                 </Box>
+                </>
+
+                 )}
             </Box>
         </Box>
     </>

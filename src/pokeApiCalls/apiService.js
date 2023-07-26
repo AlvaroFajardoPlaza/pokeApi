@@ -7,8 +7,7 @@ const pokeApi = 'https://pokeapi.co/api/v2/';
 
 //1º LLAMADA A LOS PRIMEROS 40 POKEMON:
 export const get40Pokemon = async (limit = 40 ) => {
-
-    try {
+  try {
       const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
       //console.log('la PokeData: ', data.results);
 
@@ -22,7 +21,20 @@ export const get40Pokemon = async (limit = 40 ) => {
 
       return pokeResults
 
-    } catch(error){
+  } catch(error){
       console.log(error)
-    }
-  };
+  }
+};
+
+//LLAMADA A LOS DATOS DE 1 POKEMON --- POKEDETAILS
+export const getPokeByName = async(pokename) => {
+  try {
+    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokename}`)
+    //console.log(data);
+    return data
+    
+  } catch(error){
+    console.log('Parece que ha habido un error: ', error)
+  }
+};
+

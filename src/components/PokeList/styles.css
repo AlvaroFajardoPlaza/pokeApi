@@ -2,8 +2,16 @@
     height: 150px;
 }
 
+.pokeWall{
+    object-fit: cover;
+}
+
 .cardContainer {
-    background-image: '../../assets/pokeball.png';
+    background-image: url("../../assets/pokeSymbol2.png");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    
 }
 
 .cardContainer:hover {
