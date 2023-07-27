@@ -1,3 +1,42 @@
 .pokeImg {
     height: 220px;
 }
+
+.pokeDetailsWall {
+    background: linear-gradient(225deg, #1d1d1d, #1b1c39);
+    background-size: 400% 400%;
+
+    -webkit-animation: AnimationName 25s ease infinite;
+    -moz-animation: AnimationName 25s ease infinite;
+    animation: AnimationName 25s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:88% 0%}
+    50%{background-position:13% 100%}
+    100%{background-position:88% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:88% 0%}
+    50%{background-position:13% 100%}
+    100%{background-position:88% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:88% 0%}
+    50%{background-position:13% 100%}
+    100%{background-position:88% 0%}
+}
+
+.triWall {
+    background-image: url("../../assets/triWall3.png");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+.boxPokeCardDetail {
+    background-image: url("../../assets/pokeSymbol2.png");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}

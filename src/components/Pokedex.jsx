@@ -10,12 +10,12 @@ const Pokedex = () => {
     <>
         <NavBar></NavBar>
         <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#242424',}}>
-            <Box className='mainContainer' sx={{marginTop:'6rem', minHeight:'100vh', maxWidth:'85%'}}>            
+            <Box sx={{marginTop:'6rem', minHeight:'100vh', maxWidth:'85%'}}>            
                 <PokeList />
             </Box>
         </Box>
 
-        <Box className='mainContainer' sx={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:'25vh', bgcolor:'#242424'}}>  
+        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:'25vh', bgcolor:'#242424'}}>  
           <Button 
                 variant='contained' 
                 sx={{marginTop:'3rem', marginBottom:'5rem'}}

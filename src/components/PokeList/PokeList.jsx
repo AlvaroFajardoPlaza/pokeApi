@@ -122,6 +122,7 @@ const PokeList = () => {
               sx={{bgcolor:'#606060', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}
               onClick={ () => navigate(`/${pokemon.name}`)}
             >
+              
               <CardContent>
 
                 {/* POKENAME Y POKEORDER */}
