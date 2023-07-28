@@ -1,0 +1,25 @@
+.pokeApiContainer {
+
+        background: linear-gradient(0deg, #090909, #3f3737);
+        background-size: 400% 400%;
+    
+        -webkit-animation: AnimationName 16s ease infinite;
+        -moz-animation: AnimationName 16s ease infinite;
+        animation: AnimationName 16s ease infinite;
+    }
+    
+    @-webkit-keyframes AnimationName {
+        0%{background-position:22% 0%}
+        50%{background-position:79% 100%}
+        100%{background-position:22% 0%}
+    }
+    @-moz-keyframes AnimationName {
+        0%{background-position:22% 0%}
+        50%{background-position:79% 100%}
+        100%{background-position:22% 0%}
+    }
+    @keyframes AnimationName {
+        0%{background-position:22% 0%}
+        50%{background-position:79% 100%}
+        100%{background-position:22% 0%}
+}

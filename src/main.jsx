@@ -4,10 +4,15 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from "react-router-dom";
 
+import { ThemeProvider } from '@mui/material';
+import poketheme from './context/pokeTheme.jsx';
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <ThemeProvider theme={poketheme}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </ThemeProvider>
 
-)
+);

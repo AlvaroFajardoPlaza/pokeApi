@@ -9,7 +9,7 @@ const Pokedex = () => {
   return (
     <>
         <NavBar></NavBar>
-        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#242424',}}>
+        <Box className='pokeApiContainer' sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#242424',}}>
             <Box sx={{marginTop:'6rem', minHeight:'100vh', maxWidth:'85%'}}>            
                 <PokeList />
             </Box>

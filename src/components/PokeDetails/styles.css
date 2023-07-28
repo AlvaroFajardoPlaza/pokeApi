@@ -3,7 +3,7 @@
 }
 
 .pokeDetailsWall {
-    background: linear-gradient(225deg, #1d1d1d, #1b1c39);
+    background: linear-gradient(225deg, #1d1d1d, #27282d);
     background-size: 400% 400%;
 
     -webkit-animation: AnimationName 25s ease infinite;
@@ -28,7 +28,7 @@
 }
 
 .triWall {
-    background-image: url("../../assets/triWall3.png");
+    background-image: url("../../assets/triWall4.png");
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;

@@ -38,3 +38,26 @@ export const getPokeByName = async(pokename) => {
   }
 };
 
+
+//GET ALL THE 1400 POKEMON!
+ export const globalData = async () => {
+  try {
+    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=3000&offset=0`);
+    //console.log('Toda la data es: ', data.results);
+
+    const promises = data.results.map( async (pokemon) => {
+      const res = await fetch(pokemon.url)
+      const data = res.json()
+      return data
+    })
+
+    const globalResults = await Promise.all(promises)
+    //console.log('Data global: ', globalResults);
+
+    return globalResults
+
+  } catch(error){
+    console.log('Este es el error: ', error)
+  }
+};
+
