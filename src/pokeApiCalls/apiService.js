@@ -2,6 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const pokeApi = 'https://pokeapi.co/api/v2/';
 
@@ -30,7 +31,7 @@ export const get40Pokemon = async (limit = 40 ) => {
 export const getPokeByName = async(pokename) => {
   try {
     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokename}`)
-    //console.log(data);
+    console.log(data);
     return data
     
   } catch(error){
@@ -39,21 +40,21 @@ export const getPokeByName = async(pokename) => {
 };
 
 
+
 //GET ALL THE 1400 POKEMON!
  export const globalData = async () => {
   try {
-    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=3000&offset=0`);
-    //console.log('Toda la data es: ', data.results);
+    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=1600&offset=0`);
+    console.log('Toda la data es: ', data.results);
 
     const promises = data.results.map( async (pokemon) => {
       const res = await fetch(pokemon.url)
-      const data = res.json()
+      const data = await res.json()
       return data
     })
 
     const globalResults = await Promise.all(promises)
-    //console.log('Data global: ', globalResults);
-
+    console.log('Data global: ', globalResults);
     return globalResults
 
   } catch(error){

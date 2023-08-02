@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 //APISERVICE 
-import { get40Pokemon, globalData } from '../../pokeApiCalls/apiService';
+import { get40Pokemon, globalData, getPokeByName } from '../../pokeApiCalls/apiService';
 
 //MATERIAL UI & ASSETS
 import { Grid, Box, Card, CardActions, CardContent, CardMedia, Button, Typography, CircularProgress } from '@mui/material';
@@ -35,10 +35,10 @@ const PokeList = () => {
   }, []);
 
   // 2º UseEffect para llamar a todos los pokemon ------------------------------------
-  useEffect( () => {
-    globalData()
-    console.log('Global: ', globalPokemon);
-  }, []);
+  // useEffect( () => {
+  //   globalData()
+  //   console.log('Global: ', globalPokemon);
+  // }, []);
 
 
   const loadingPokeData = () => {
@@ -56,8 +56,12 @@ const PokeList = () => {
         return(
           <Grid item xs={12} sm={6} md={3} key={pokemon.id}>
             <Card className='cardContainer'
-              sx={{bgcolor:'#606060', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)'}}
-              onClick={ () => navigate(`/${pokemon.name}`) }
+              sx={{bgcolor:'#505050', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 10px 3px rgba(175,175,175,0.3)'}}
+              onClick={ () => {
+                getPokeByName(pokemon.name)
+                  .then(navigate(`/${pokemon.name}`))
+                  .catch(error => console.log(error))
+              }}
             >
               
               <CardContent>
@@ -66,11 +70,11 @@ const PokeList = () => {
                 <Box sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center'}}>
 
                   <Box sx={{display:'flex', flexDirection:'row', justifyContent:'left', gap:'0.75rem', width:'100%'}}>
-                    <Typography variant='h3' sx={{color:'#858585', fontSize:'2rem', fontWeight:'900', textAlign:'left'}}>
+                    <Typography variant='h3' sx={{color:'#e3e3e366', fontSize:'2.3rem', fontWeight:'900', textAlign:'left'}}>
                       {pokemon.order}
                     </Typography>
 
-                    <Typography variant='h6' sx={{color:'#f5f5f5', textTransform:'capitalize'}}>
+                    <Typography variant='h6' sx={{color:'#f5f5f5', textTransform:'capitalize', fontSize:'1.4rem', fontWeight:'800'}}>
                       {pokemon.name}
                     </Typography>
                   </Box>
