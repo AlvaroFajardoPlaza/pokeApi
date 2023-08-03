@@ -1,5 +1,5 @@
 .pokeSprite {
-    height: 150px;
+    height: 168px;
 }
 
 .pokeWall{
@@ -11,9 +11,11 @@
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
+    transition-timing-function: ease-in-out;
     
 }
 
 .cardContainer:hover {
     background-color: #7d786cd8;
+    transform: translateY(-3%);
 }

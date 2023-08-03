@@ -6,6 +6,7 @@ import { getPokeByName } from '../../pokeApiCalls/apiService';
 
 import { Typography, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 const PokeDetails = () => {
 
@@ -36,7 +37,7 @@ const PokeDetails = () => {
     
         <Box className='triWall' sx={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
 
-            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', marginBottom:'6rem', p:'2rem', minHeight:'100vh', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>            
+            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', marginBottom:'6rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>            
                 { loading ? (<CircularProgress color='secondary' sx={{marginTop:'8rem'}} />
                 ) : (
                 <>
@@ -45,7 +46,7 @@ const PokeDetails = () => {
                   {/* POKE NAME & ORDER */}
                   <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'0.75rem' }}>
                     <Typography variant='h4' sx={{fontWeight:'900', color:'#e6e6e600', textTransform:'capitalize', fontSize:'3.5rem', letterSpacing:'-0.1rem', WebkitTextStroke:'1px #d1d1d1'}}>
-                      {pokeData.order}.
+                      N.{pokeData.order}
                     </Typography>
                     <Typography variant='h4' sx={{fontWeight:'800', color:'#ffffff', textTransform:'capitalize'}}>
                       {pokeData.name}
@@ -53,10 +54,10 @@ const PokeDetails = () => {
                   </Box>
 
                   {/* POKE IMAGE */}
-                  <img className='pokeImg' src={pokeData.sprites.front_default}></img>
+                  <img className='pokeImg' src={pokeData.sprites.versions["generation-vii"]["ultra-sun-ultra-moon"].front_default || pokeData.sprites.front_default}></img>
 
                   {/* POKE TYPES */}
-                  <Box key={pokeData.id} sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem'}}>
+                  <Box key={pokeData.name} sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem', marginTop:'1rem'}}>
                     {pokeData.types.map( type => {
                       switch (type.type.name) {
                         case "fire":
@@ -195,9 +196,10 @@ const PokeDetails = () => {
                     <Typography variant='body1'>Height: {pokeData.height}</Typography>
                   </Box>
 
-                  <Box sx={{display:'flex', gap:'2rem'}}>
+                  <Box sx={{display:'flex', gap:'0.5rem'}}>
                     {/* HABILITIES */}
                     <Box sx={{display:'flex', flexDirection:'column', justifyContent:'left', alignItems:'left', gap:'1rem', marginTop:'2rem', bgcolor:'#e3e3e3', borderRadius:'1rem', padding:'1rem', }}>
+                      
                       <Typography>Possible abilities of {pokeData.name}:</Typography>
                     
                     {pokeData.abilities.map( ability => (
@@ -224,6 +226,8 @@ const PokeDetails = () => {
             </Box>
             </Box>
         </Box>
+
+        <Footer />
     </>
   )
 }

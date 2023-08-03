@@ -6,3 +6,8 @@
     height: 45px;
     padding: 0 0 0 2rem;
 }
+
+.searchPokeInput:hover {
+    /* background-color: linear-gradient(45deg, rgba(6,11,19,0.9276304271708683) 0%, rgba(8,44,106,0.8884147408963585) 17%, rgba(100,255,181,0.8071822478991597) 64%, rgba(255,255,255,1) 100); */
+    background-color: #e3e3e3;
+}
