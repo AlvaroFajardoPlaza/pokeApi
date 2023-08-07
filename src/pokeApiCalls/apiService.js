@@ -65,3 +65,31 @@ export const getPokeByName = async(pokename) => {
   }
 };
 
+
+//GET POKETYPES
+export const getPokeTypes = async () => {
+  try {
+    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=1600&offset=0`);
+    //console.log('Toda la data es: ', data.results);
+
+    const promises = data.results.map( async (pokemon) => {
+      const res = await fetch(pokemon.url)
+      const data = await res.json()
+      return data
+    })
+    const fullResults = await Promise.all(promises)
+    //console.log('Data global: ', fullResults);
+
+    const pokeTypeResults = fullResults.map( async(pokemon) => {
+      const pokeType = pokemon.types.map((typeInfo) => typeInfo.type.name);
+      console.log(pokeType);
+      return pokeType 
+    })
+    return pokeTypeResults
+
+  } catch (error){
+    console.log('ha habido un error: ', error);
+    throw error
+  }
+}
+

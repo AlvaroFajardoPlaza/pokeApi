@@ -13,6 +13,8 @@ import { Grid, Box, Card, CardActions, CardContent, CardMedia, Button, Typograph
 import Loader from '../Loader/Loader';
 import pokeWall from '../../assets/pokeball.png';
 
+import PokeType from '../getPokeType/GetPokeType';
+
 
 const PokeList = () => {
 
@@ -82,7 +84,7 @@ const PokeList = () => {
         return(
           <Grid item xs={12} sm={6} md={3} key={pokemon.id}>
             <Card className='cardContainer'
-              sx={{bgcolor:'#252525', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 10px 3px rgba(175,175,175,0.3)'}}
+              sx={{bgcolor:'#252525', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 10px 3px rgba(175,175,175,0.3)', minHeight:'300px'}}
               onClick={ () => {
                 getPokeByName(pokemon.name)
                   .then(navigate(`/${pokemon.name}`))
@@ -93,7 +95,7 @@ const PokeList = () => {
               <CardContent>
 
                 {/* POKENAME Y POKEORDER */}
-                <Box sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center'}}>
+                <Box sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center', gap:'1rem'}}>
 
                   <Box sx={{display:'flex', flexDirection:'row', justifyContent:'left', gap:'0.75rem', width:'100%'}}>
                     <Typography variant='h3' sx={{color:'#e3e3e366', fontSize:'2rem', fontWeight:'900', textAlign:'left'}}>
@@ -106,9 +108,22 @@ const PokeList = () => {
                   </Box>
                 </Box>
 
-                {/* POKEIMAGE --- SPRITE FRONT.DEFAULT */}
+                {/* POKEIMAGE --- SPRITE VII GENERATION FRONT.DEFAULT */}
                 <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                   <img className='pokeSprite' src={pokemon.sprites.versions["generation-vii"]["ultra-sun-ultra-moon"].front_default || pokemon.sprites.front_default}></img>
+                </Box>
+
+                {/* POKETYPE ---- */}
+                <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'0.5rem'}}>
+                {pokemon.types.length > 0 ? pokemon.types.map( (type) => {
+                    return (
+                        <Box key={type.type.name} sx={{bgcolor:'#252525', border: '1px solid #eaeaea50', borderRadius:'5rem', padding:'1rem', boxShadow:'1px 1px 10px 3px rgba(60, 60, 60,0.8)'}}>
+                          <Typography variant='body1' sx={{color:'#ffffff',textTransform:'uppercase', fontSize:'0.85rem', letterSpacing:'0.1rem', textAlign:'center'}}>
+                            {type.type.name}
+                          </Typography>
+                        </Box>
+                    )
+                }): <Loader />}
                 </Box>
 
               </CardContent>
