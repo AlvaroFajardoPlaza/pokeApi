@@ -39,6 +39,7 @@ export const getPokeByName = async(pokename) => {
     
   } catch(error){
     console.log('Parece que ha habido un error: ', error)
+    throw error
   }
 };
 

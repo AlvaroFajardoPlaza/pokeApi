@@ -11,9 +11,7 @@ import { get40Pokemon, globalData, getPokeByName } from '../../pokeApiCalls/apiS
 //MATERIAL UI & ASSETS
 import { Grid, Box, Card, CardActions, CardContent, CardMedia, Button, Typography, CircularProgress } from '@mui/material';
 import Loader from '../Loader/Loader';
-import pokeWall from '../../assets/pokeball.png';
-
-import PokeType from '../getPokeType/GetPokeType';
+import TypeFilter from '../Filters/TypeFilter';
 
 
 const PokeList = () => {
@@ -72,6 +70,8 @@ const PokeList = () => {
 
   return (
     <>
+    <TypeFilter />
+
     <InfiniteScroll 
       dataLength={pokemonData.length}
       next={fetchMorePokemon}

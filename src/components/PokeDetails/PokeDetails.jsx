@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
 import { getPokeByName } from '../../pokeApiCalls/apiService';
 
-import { Typography, Box, CircularProgress } from '@mui/material'
+import { Typography, Box, CircularProgress, Button } from '@mui/material'
 import { useParams } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import alienWink from '../../assets/alienWink1.json';
@@ -17,6 +17,8 @@ const PokeDetails = () => {
 
   const pokemonName = useParams().slug
 
+  const pokeOrder = pokeData.order
+
   const fetchPokemon = async(pokemonName) => {
     const res = await getPokeByName(pokemonName)
     setPokeData(res)
@@ -24,12 +26,35 @@ const PokeDetails = () => {
   };
 
 
-  //hook que pide la info al cargar la página.
+  //hook que pide la info del pokemon por nombre al cargar la página.
   useEffect( () => {
      fetchPokemon(pokemonName)
   }, [])
 
   console.log('Tenemos bien recibida la PokeData???', pokeData);
+
+  //funcion que pide la info por order: TENEMOS QUE CREAR UNA NUEVA FUNCIÓN QUE OPERE A TRAVÉS DE LOS ORDERS Y NO DE LOS NOMBRES.
+  const fetchPokemonByOrder = async (order) => {
+    setLoading(true);
+    try {
+      const res = await getPokeByName(order);
+      setPokeData(res);
+      setLoading(false);
+    } catch (error) {
+      console.log('Error fetching Pokémon:', error);
+      setLoading(false);
+    }
+  };
+
+  const getPreviousPoke = async () => {
+    const previousOrder = pokeData.order - 1;
+    await fetchPokemonByOrder(previousOrder);
+  };
+
+  const getNextPoke = async () => {
+    const nextOrder = pokeData.order + 1;
+    await fetchPokemonByOrder(nextOrder);
+  };
 
   return (
     <>
@@ -37,11 +62,11 @@ const PokeDetails = () => {
 
         <Box className='pokeDetailsWall' sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#000000',}}>
     
-        <Box className='triWall' sx={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <Box className='triWall' sx={{width:'100%', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
 
           
 
-            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', marginBottom:'6rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>      
+            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>      
 
                 {/* <Box className='lottieBack'>
                 <Lottie animationData={alienWink} loop={true} />
@@ -199,40 +224,60 @@ const PokeDetails = () => {
                     })}
                   </Box>
 
-                  {/* WEIGHT & HEIGHT */}
-                  <Box sx={{display:'flex', justifyContent:'space-around', alignItems:'center', gap:'2rem', marginTop: '2rem', color:'#e3e3e3'}}>
-                    <Typography variant='body1'>Weight: {pokeData.weight}</Typography>
-                    <Typography variant='body1'>Height: {pokeData.height}</Typography>
-                  </Box>
 
-                  <Box sx={{display:'flex', gap:'0.5rem'}}>
+                    {/* WEIGHT & HEIGHT */}
+                    <Box sx={{display:'flex', justifyContent:'space-around', alignItems:'center', gap:'2rem', marginTop: '2rem', color:'#e3e3e3'}}>
+                      <Typography variant='body1'>Weight: <b>{pokeData.weight}</b></Typography>
+                      <Typography variant='body1'>Height: <b>{pokeData.height}</b></Typography>
+                    </Box>
+
+                    <hr className='horizLine'></hr>
+
+
                     {/* HABILITIES */}
-                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'left', alignItems:'left', gap:'1rem', marginTop:'2rem', bgcolor:'#e3e3e3', borderRadius:'1rem', padding:'1rem', }}>
+                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'left', alignItems:'left', gap:'1rem', marginTop:'0.8rem', width:'100%', color:'#fdfdfd', fontSize:'1.2rem' }}>
                       
                       <Typography>Possible abilities of {pokeData.name}:</Typography>
-                    
+
                     {pokeData.abilities.map( ability => (
-                        <Typography variant='body1' sx={{textTransform:'capitalize', fontWeight:'600'}}>
-                          {ability.ability.name}
+                        <Typography variant='body1' sx={{textTransform:'capitalize', fontWeight:'700', letterSpacing:'0.06rem'}}>
+                          {ability.ability.name} //
                         </Typography>
                       ))}
                     </Box>
 
+
+
                     {/* POKE STATS */}
-                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'left', gap:'1rem', marginTop: '2rem', border: '1px solid #eaeaea', borderRadius:'1rem', padding:'1rem', bgcolor:'#e3e3e3' }}>
+                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'left', gap:'1rem', marginTop: '1rem', border: '1px solid #eaeaea50', borderRadius:'1rem', padding:'1rem', bgcolor:'#e3e3e350' }}>
                     {pokeData.stats.map( stat => (
                         <Typography variant='body1' sx={{textTransform:'capitalize'}}>
                           {stat.stat.name} : {stat.base_stat}
                         </Typography>
                       ))}
                     </Box>
-                  </Box>
+                  
                   
                  </Box>
                 </>
                  )}
                  
             </Box>
+            
+            <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem', m:'2rem'}}>
+              <Button 
+                onClick={() => getPreviousPoke()} 
+                variant='contained' 
+                color='secondary' 
+                sx={{borderRadius:'4rem'}}>Previous</Button>  
+              <Button 
+                onClick={() => getNextPoke()} 
+                variant='contained' 
+                color='secondary' 
+                sx={{borderRadius:'4rem'}}>Next</Button>        
+            </Box>
+
+
             </Box>
         </Box>
 

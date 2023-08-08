@@ -42,6 +42,13 @@
     background-size: cover;
 }
 
+.horizLine {
+    margin-top: 1rem;
+    width: 35px;
+    max-height: 1px;
+    color: white;
+    padding: 0;
+}
 
 /* PRUEBAS */
 /* .lottieBack {
