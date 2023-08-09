@@ -3,7 +3,7 @@ import './styles.css';
 import Lottie from 'lottie-react';
 import { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
-import { getPokeByName } from '../../pokeApiCalls/apiService';
+import { getPokeByName , getPokeById} from '../../pokeApiCalls/apiService';
 
 import { Typography, Box, CircularProgress, Button } from '@mui/material'
 import { useParams } from 'react-router-dom';
@@ -17,27 +17,27 @@ const PokeDetails = () => {
 
   const pokemonName = useParams().slug
 
-  const pokeOrder = pokeData.order
-
   const fetchPokemon = async(pokemonName) => {
     const res = await getPokeByName(pokemonName)
     setPokeData(res)
     setLoading(false)
   };
 
-
   //hook que pide la info del pokemon por nombre al cargar la página.
   useEffect( () => {
      fetchPokemon(pokemonName)
   }, [])
 
-  console.log('Tenemos bien recibida la PokeData???', pokeData);
+  console.log('Esta es la pokeData: ', pokeData);
 
-  //funcion que pide la info por order: TENEMOS QUE CREAR UNA NUEVA FUNCIÓN QUE OPERE A TRAVÉS DE LOS ORDERS Y NO DE LOS NOMBRES.
-  const fetchPokemonByOrder = async (order) => {
+
+  const pokeId = pokeData.id
+
+  //funcion que pide la info por order: TENEMOS QUE CREAR UNA NUEVA FUNCIÓN QUE OPERE A TRAVÉS DE LOS ORDERS (variable tipo Number).
+  const fetchPokemonByOrder = async (pokeId) => {
     setLoading(true);
     try {
-      const res = await getPokeByName(order);
+      const res = await getPokeById(pokeId);
       setPokeData(res);
       setLoading(false);
     } catch (error) {
@@ -47,13 +47,13 @@ const PokeDetails = () => {
   };
 
   const getPreviousPoke = async () => {
-    const previousOrder = pokeData.order - 1;
-    await fetchPokemonByOrder(previousOrder);
+    const previousPokeId = pokeData.id - 1;
+    await fetchPokemonByOrder(previousPokeId);
   };
 
   const getNextPoke = async () => {
-    const nextOrder = pokeData.order + 1;
-    await fetchPokemonByOrder(nextOrder);
+    const nextPokeId = pokeData.id + 1;
+    await fetchPokemonByOrder(nextPokeId);
   };
 
   return (
@@ -264,6 +264,7 @@ const PokeDetails = () => {
                  
             </Box>
             
+            {/* ESTA LÓGICA TIENE QUE VENIR IMPLEMENTADA A TRAVÉS DEL ID DEL POKEMON */}
             <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem', m:'2rem'}}>
               <Button 
                 onClick={() => getPreviousPoke()} 

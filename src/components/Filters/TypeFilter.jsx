@@ -56,7 +56,6 @@ const TypeFilter = () => {
             <Button sx={{m:'0.3rem', bgcolor:'#443B49', color:'#ffffff', border: '1px solid #eaeaea50', borderRadius:'5rem', padding:'1rem', boxShadow:'1px 1px 10px 3px rgba(60, 60, 60,0.8)', textTransform:'uppercase', fontSize:'0.85rem', letterSpacing:'0.1rem'}}>GHOST</Button>
 
 
-
         </Box>
     </>
   )

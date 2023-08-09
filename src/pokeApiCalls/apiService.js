@@ -43,6 +43,18 @@ export const getPokeByName = async(pokename) => {
   }
 };
 
+//LLAMADA A LOS DATOS DE UN POKEMON POR SU ORDER -------------------------
+export const getPokeById = async(pokeId) => {
+  try {
+    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`)
+    console.log(data);
+    return data
+  } catch (error){
+    console.log('Ha habido un error: ', error)
+    throw error
+  };
+}
+
 
 
 //GET ALL THE 1400 POKEMON!
