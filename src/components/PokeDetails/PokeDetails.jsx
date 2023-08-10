@@ -62,11 +62,15 @@ const PokeDetails = () => {
 
         <Box className='pokeDetailsWall' sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#000000',}}>
     
-        <Box className='triWall' sx={{width:'100%', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+        <Box className='triWall' sx={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
 
-          
+              <Button 
+                onClick={() => getPreviousPoke()} 
+                variant='contained' 
+                color='primary' 
+                sx={{borderRadius:'4rem', m:'1rem', p:'1rem', letterSpacing:'0.15rem', color:'#ffffff', boxShadow:'1px 1px 10px 3px rgba(60, 60, 60,0.8)'}}>Previous</Button>  
 
-            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>      
+            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', marginBottom:'3rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>      
 
                 {/* <Box className='lottieBack'>
                 <Lottie animationData={alienWink} loop={true} />
@@ -261,24 +265,14 @@ const PokeDetails = () => {
                  </Box>
                 </>
                  )}
-                 
-            </Box>
-            
-            {/* ESTA LÓGICA TIENE QUE VENIR IMPLEMENTADA A TRAVÉS DEL ID DEL POKEMON */}
-            <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem', m:'2rem'}}>
-              <Button 
-                onClick={() => getPreviousPoke()} 
-                variant='contained' 
-                color='secondary' 
-                sx={{borderRadius:'4rem'}}>Previous</Button>  
-              <Button 
-                onClick={() => getNextPoke()} 
-                variant='contained' 
-                color='secondary' 
-                sx={{borderRadius:'4rem'}}>Next</Button>        
             </Box>
 
-
+              <Button 
+                  onClick={() => getNextPoke()} 
+                  variant='contained' 
+                  color='primary' 
+                  sx={{borderRadius:'4rem', m:'1rem', p:'1rem', letterSpacing:'0.15rem', color:'#ffffff', boxShadow:'1px 1px 10px 3px rgba(60, 60, 60,0.8)'}}>Next</Button>  
+      
             </Box>
         </Box>
 
