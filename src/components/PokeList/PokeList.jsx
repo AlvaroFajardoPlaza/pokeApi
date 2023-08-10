@@ -25,7 +25,7 @@ const PokeList = () => {
   const [ hasMore, setHasMore ] = useState(true)
 
   //ESTADOS SIMPLES DENTRO DE NUESTRA POKÉDEX
-  const [ active, setActive ] = useState(false)
+  const [ selectedType, setSelectedType ] = useState(null)
 
 
   //1º UseEffect para llamar a los primeros 40 pokemon ------------------
@@ -60,17 +60,25 @@ const PokeList = () => {
     }
   };
 
+  //FUNCIÓN PARA FILTRAR LOS POKEMON POR TIPO:
+  const filteredPokemonByType = (type) => {
+    if ( type === selectedType) {
+      setSelectedType(null) //Si el botoón ya ha sido pulsado, vuelve al estado null.
+    } else {
+      setSelectedType(type)
+    }
+  };
 
-  // 2º UseEffect para llamar a todos los pokemon ------------------------------------
-  // useEffect( () => {
-  //   globalData()
-  //     .then( data => setGlobalPokemon(data) )
-  //     .catch( error => console.log('Ha habido un error ', error))  
-  // }, []);
+  //Ahora necesitamos la función que nos filtra la lista de pokemon según si el filtro ha sido seleccionado o no.
+  const filteredPokemonList = selectedType
+    ? pokemonData.filter( (pokemon) => {
+      pokemon.types.some((type) => type.type.name == selectedType )
+    }) : pokemonData ;
+
 
   return (
     <>
-    <TypeFilter />
+    <TypeFilter onSelectedType={filteredPokemonByType} />
 
     <InfiniteScroll 
       dataLength={pokemonData.length}
