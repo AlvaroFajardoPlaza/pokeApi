@@ -3,6 +3,7 @@ import './styles.css';
 import Lottie from 'lottie-react';
 import { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
+import PokeStats from './Stats/PokeStats';
 import { getPokeByName , getPokeById} from '../../pokeApiCalls/apiService';
 
 import { Typography, Box, CircularProgress, Button } from '@mui/material'
@@ -27,9 +28,7 @@ const PokeDetails = () => {
   useEffect( () => {
      fetchPokemon(pokemonName)
   }, [])
-
   console.log('Esta es la pokeData: ', pokeData);
-
 
   const pokeId = pokeData.id
 
@@ -54,6 +53,12 @@ const PokeDetails = () => {
   const getNextPoke = async () => {
     const nextPokeId = pokeData.id + 1;
     await fetchPokemonByOrder(nextPokeId);
+  };
+
+  //FUNCIÓN PARA ENVIAR LOS STATS:
+  const sendStats = async() => {
+    let stats = await pokeData.stats
+    return stats;
   };
 
   return (
@@ -239,7 +244,7 @@ const PokeDetails = () => {
 
 
                     {/* HABILITIES */}
-                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'left', alignItems:'left', gap:'1rem', marginTop:'0.8rem', width:'100%', color:'#fdfdfd', fontSize:'1.2rem' }}>
+                    <Box key={pokeData.abilities} sx={{display:'flex', flexDirection:'row', justifyContent:'left', alignItems:'left', gap:'1rem', marginTop:'0.8rem', marginBottom:'2rem', width:'100%', color:'#fdfdfd', fontSize:'1.2rem' }}>
                       
                       <Typography>Possible abilities of {pokeData.name}:</Typography>
 
@@ -253,14 +258,17 @@ const PokeDetails = () => {
 
 
                     {/* POKE STATS */}
-                    <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'left', gap:'1rem', marginTop: '1rem', border: '1px solid #eaeaea50', borderRadius:'1rem', padding:'1rem', bgcolor:'#e3e3e350' }}>
+                    {/* <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'left', gap:'1rem', marginTop: '1rem', border: '1px solid #eaeaea50', borderRadius:'1rem', padding:'1rem', bgcolor:'#e3e3e350' }}>
                     {pokeData.stats.map( stat => (
                         <Typography variant='body1' sx={{textTransform:'capitalize'}}>
                           {stat.stat.name} : {stat.base_stat}
                         </Typography>
                       ))}
+                    </Box> */}
+
+                    <Box sx={{}}>
+                      <PokeStats stats={sendStats()}/>
                     </Box>
-                  
                   
                  </Box>
                 </>

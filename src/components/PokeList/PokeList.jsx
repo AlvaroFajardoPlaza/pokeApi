@@ -21,7 +21,7 @@ const PokeList = () => {
 
   const [ offset, setOffset ] = useState(0)
   const [ pokemonData, setPokemonData ] = useState([])
-  const [ globalPokemon, setGlobalPokemon] = useState([])
+  //const [ globalPokemon, setGlobalPokemon] = useState([])
   const [ hasMore, setHasMore ] = useState(true)
 
   //ESTADOS SIMPLES DENTRO DE NUESTRA POKÉDEX
@@ -65,15 +65,20 @@ const PokeList = () => {
     if ( type === selectedType) {
       setSelectedType(null) //Si el botoón ya ha sido pulsado, vuelve al estado null.
     } else {
-      setSelectedType(type)
-    }
-  };
+      setSelectedType(type);
+  }};
+
+  console.log('Este es el tipo seleccionado: ', selectedType);
 
   //Ahora necesitamos la función que nos filtra la lista de pokemon según si el filtro ha sido seleccionado o no.
   const filteredPokemonList = selectedType
     ? pokemonData.filter( (pokemon) => {
-      pokemon.types.some((type) => type.type.name == selectedType )
-    }) : pokemonData ;
+       pokemon.types.some((type) => type.type.name == selectedType )
+    })
+      .then( () => setPokemonData(filteredPokemonList))
+      .catch( error => console.log(error)) : pokemonData ;
+
+  console.log('Tenemos la lista filtrada: ',filteredPokemonList);
 
 
   return (
@@ -147,4 +152,4 @@ const PokeList = () => {
   )
 };
 
-export default PokeList
+export default PokeList 
