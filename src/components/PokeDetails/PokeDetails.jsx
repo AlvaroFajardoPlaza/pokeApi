@@ -1,20 +1,24 @@
 import React from 'react';
 import './styles.css';
-import Lottie from 'lottie-react';
+
 import { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
 import PokeStats from './Stats/PokeStats';
 import { getPokeByName , getPokeById} from '../../pokeApiCalls/apiService';
 
-import { Typography, Box, CircularProgress, Button } from '@mui/material'
+import { Typography, Box, CircularProgress, Button } from '@mui/material';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import { useParams } from 'react-router-dom';
 import Footer from '../Footer/Footer';
-import alienWink from '../../assets/alienWink1.json';
+
 
 const PokeDetails = () => {
 
   const [ loading, setLoading ] = useState(true)
   const [ pokeData, setPokeData ] = useState({});
+
+  const [ chartData, setChartData ] = useState(null)
 
   const pokemonName = useParams().slug
 
@@ -22,6 +26,23 @@ const PokeDetails = () => {
     const res = await getPokeByName(pokemonName)
     setPokeData(res)
     setLoading(false)
+
+    const statValues = await res.stats.map((stat) => stat.base_stat);
+    const statNames = await res.stats.map((stat) => stat.stat.name);
+  
+          const data = {
+            labels: statNames,
+            datasets: [
+              {
+                label: '',
+                data: statValues,
+                borderColor: '#2DF99C',
+                backgroundColor: '#2DF99CD4',
+              },
+            ],
+          };
+
+          setChartData(data);
   };
 
   //hook que pide la info del pokemon por nombre al cargar la página.
@@ -29,6 +50,19 @@ const PokeDetails = () => {
      fetchPokemon(pokemonName)
   }, [])
   console.log('Esta es la pokeData: ', pokeData);
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Tooltip,
+  );
+
+  const options = {
+    indexAxis: 'y',
+  };
+  console.log('Tenemos recibidas las estadisticas del pokemon?', chartData )
+
 
   const pokeId = pokeData.id
 
@@ -38,6 +72,22 @@ const PokeDetails = () => {
     try {
       const res = await getPokeById(pokeId);
       setPokeData(res);
+      const statValues = res.stats.map((stat) => stat.base_stat);
+      const statNames = res.stats.map((stat) => stat.stat.name);
+  
+      const data = {
+        labels: statNames,
+        datasets: [
+          {
+            label: '',
+            data: statValues,
+            borderColor: '#2DF99C',
+            backgroundColor: '#2DF99CD4',
+          },
+        ],
+      };
+      
+      setChartData(data);
       setLoading(false);
     } catch (error) {
       console.log('Error fetching Pokémon:', error);
@@ -55,12 +105,6 @@ const PokeDetails = () => {
     await fetchPokemonByOrder(nextPokeId);
   };
 
-  //FUNCIÓN PARA ENVIAR LOS STATS:
-  const sendStats = async() => {
-    let stats = await pokeData.stats
-    return stats;
-  };
-
   return (
     <>
         <NavBar />
@@ -75,7 +119,7 @@ const PokeDetails = () => {
                 color='primary' 
                 sx={{borderRadius:'4rem', m:'1rem', p:'1rem', letterSpacing:'0.15rem', color:'#ffffff', boxShadow:'1px 1px 10px 3px rgba(60, 60, 60,0.8)'}}>Previous</Button>  
 
-            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626E6', marginTop:'6rem', marginBottom:'3rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>      
+            <Box className='boxPokeCardDetail' sx={{minWidth:'40%', bgcolor:'#262626F2', marginTop:'6rem', marginBottom:'3rem', p:'1rem', border:'1px solid #858585', borderRadius:'1rem', boxShadow:'2px 2px 15px 3px rgba(175,175,175,0.3)', display:'flex', justifyContent:'center', alignItems:'center' }}>      
 
                 {/* <Box className='lottieBack'>
                 <Lottie animationData={alienWink} loop={true} />
@@ -255,19 +299,12 @@ const PokeDetails = () => {
                       ))}
                     </Box>
 
-
-
-                    {/* POKE STATS */}
-                    {/* <Box sx={{display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'left', gap:'1rem', marginTop: '1rem', border: '1px solid #eaeaea50', borderRadius:'1rem', padding:'1rem', bgcolor:'#e3e3e350' }}>
-                    {pokeData.stats.map( stat => (
-                        <Typography variant='body1' sx={{textTransform:'capitalize'}}>
-                          {stat.stat.name} : {stat.base_stat}
-                        </Typography>
-                      ))}
-                    </Box> */}
-
                     <Box sx={{}}>
-                      <PokeStats stats={sendStats()}/>
+                      {chartData ? (
+                        <Bar options={options} data={chartData} />
+                        ) : (
+                        <Typography variant='body1' sx={{color:'#fdfdfd', marginTop:'2rem'}}>Loading...</Typography>
+                      )}
                     </Box>
                   
                  </Box>

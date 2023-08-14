@@ -12,17 +12,6 @@ import { getPokeByName } from '../../../pokeApiCalls/apiService';
 
 const PokeStats = ( {stats} ) => {
 
-  //PRUEBA DE CÓDIGO 1 ---------------------------------------------------
-    // //1 TENEMOS QUE TRAER LOS STATS + CREAR LA FUNCIÓN
-    // console.log('Tenemos los stats?', stats);
-
-    // //EXTRAEMOS EL OBJETO DE STATS DE LA PROP
-    // const { stats: pokemonStats } = stats;
-
-    // //MAPEO DE RESULTADOS
-    // const statValues = pokemonStats.map((stat) => stat.base_stat);
-    // const statNames = pokemonStats.map((stat) => stat.stat.name); ---------------------------------------------------
-
     const { stats: pokemonStats } = stats;
 
     const [ chartData, setChartData ] = useState(null)
@@ -42,10 +31,10 @@ const PokeStats = ( {stats} ) => {
             labels: statNames,
             datasets: [
               {
-                label: 'Dataset 1',
+                label: '',
                 data: statValues,
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(255, 99, 132, 0.8)',
               },
             ],
           };
@@ -57,43 +46,20 @@ const PokeStats = ( {stats} ) => {
       };
   
       fetchData();
-    }, [pokemonStats]);
+    }, [pokemonName]);
   
     ChartJS.register(
       CategoryScale,
       LinearScale,
       BarElement,
+      Tooltip,
     );
   
     const options = {
       indexAxis: 'y',
     };
 
-
-    //2 CON LOS DATOS RECIBIDOS CREAMOS UN BAR-CHART QUE DESPLIEGUE LA DATA ESPECIFICANDO OPTIONS & DATA ---------------
-    // ChartJS.register(
-    //     CategoryScale,
-    //     LinearScale,
-    //     BarElement,
-    //   );
-
-    // const options = {
-    //     indexAxis: 'y',
-    // }
-
-    // const labels = statNames;
-    // const data = {
-    //     labels,
-    //     datasets: [
-    //       {
-    //         label: 'Dataset 1',
-    //         data: statValues,
-    //         borderColor: 'rgb(255, 99, 132)',
-    //         backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    //       },
-          
-    //     ]
-    //   };
+    console.log('Tenemos recibidas las estadisticas del pokemon?', chartData )
 
   return (
     <>

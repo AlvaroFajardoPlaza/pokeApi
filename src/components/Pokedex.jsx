@@ -20,7 +20,7 @@ const Pokedex = () => {
         </Typography>
 
         <Box className='pokeApiContainer' sx={{display:'flex', justifyContent:'center', alignItems:'center', bgcolor:'#212121',}}>
-            <Box sx={{marginTop:'2rem', minHeight:'100vh', maxWidth:'85%'}}>            
+            <Box sx={{minHeight:'100vh', maxWidth:'85%'}}>            
                 <PokeList />
             </Box>
         </Box>
